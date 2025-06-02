@@ -4,11 +4,9 @@
 <head>
     <link rel="stylesheet" href=" {{url_for('static', filename='css/styles.css')}}">
 </head>
-<div class="header">
-    <h1>Criminals Record Management System</h1>
-    <div class="Logo">
-        <img src="{{url_for('static', filename='images/logo.svg')}}" alt="logo" width="135">
-    </div>
+<div class="banner">
+    <img src="{{ url_for('static', filename='images/logo.svg')}}" alt="logo" class="logo">
+    <h1 class="banner-text">Criminal Records Management System</h1>
 </div>
 
 </html>

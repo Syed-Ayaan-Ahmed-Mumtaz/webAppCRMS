@@ -1,7 +1,21 @@
-.header {
-    padding: 0px;
-    color: navy;
-    width: 150px;
+.banner {
+    background-color: navy;
+    padding: 20px;
+    text-align: center;
+    position: relative;
 }
 
-;
+.logo {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.banner-text {
+    color: gold;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 24px;
+    margin: 0;
+}
