@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CRMS - Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" </head>
+
+<body>
+    <!-- Banner Section -->
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo" class="logo">
+        <h1 class="banner-text">Criminal Records Management System</h1>
+    </div>
+
+    <!--Records -->
+    <div class="records-container">
+        <h2>Records</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Entity Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </table>
+        <tbody>
+            {% for records in records %}
+            <tr>
+                <td>{ record.id }</td>
+                <td>{ record.name }</td>
+                <td>{ record.description }</td>
+                <td>{ record.status }</td>
+                <td>{ record.date }</td>
+            </tr>
+            {% end for %}
+        </tbody>
+    </div>
+</body>
+
+</html>
