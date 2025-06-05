@@ -19,3 +19,28 @@
     font-size: 24px;
     margin: 0;
 }
+
+.records-container {
+    width: 80%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border: 1px gray;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px gray;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: navy;
+    color: white;
+}

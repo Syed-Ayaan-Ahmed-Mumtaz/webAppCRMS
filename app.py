@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-
 app = Flask(__name__)
 
 #login user
@@ -16,13 +15,23 @@ def login():
     password = request.form['password']
 
     if username == VALID_USERNAME and password == VALID_PASSWORD:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('records'))
     else:
         return render_template('login.html', error="Invalid credentials")
+    
+#records page
+@app.route('/records')
+def records():
+    dummy_data= [
+        {"id": 1, "name": "Case A", "description": "Robbery", "date": "2023-01-01", "status": "Open"},
+        {"id": 2, "name": "Case B", "description": "Theft", "date": "2023-01-05", "status": "Closed"},
+    ]
+    return render_template('records.html', records=dummy_data)
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
+#queries page
+@app.route('/queries')
+def queries():
+    return render_template('queries.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
