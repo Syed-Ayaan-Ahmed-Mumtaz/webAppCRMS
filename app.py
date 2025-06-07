@@ -29,7 +29,7 @@ def records():
     return render_template('records.html', records=dummy_data)
 
 #queries page
-@app.route('/queries')
+@app.route('/queries', methods=['GET', 'POST'])
 def queries():
     dummy_records= [
         {"id": 1, "name": "Case A", "officer": "Officer Mehmood", "date": "2023-01-01", "status": "Open"},
@@ -38,7 +38,9 @@ def queries():
     if request.method=='POST':
         #logic for filtering will be added later
         return render_template('queries.html', records=dummy_records)
-    return render_template('queries.html')
+    
+    #show dummy data on GET  request as well
+    return render_template('queries.html', records=dummy_records)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -2,7 +2,7 @@
 
 <head>
     <title>CRMS - Records</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename=css/styles.css)}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
@@ -28,7 +28,7 @@
             <button type="submit">Run Query</button>
         </form>
 
-        { % if records %}
+        {% if records %}
         <table>
             <tr>
                 <th>ID</th>
@@ -37,6 +37,7 @@
                 <th>Status</th>
                 <th>Date</th>
             </tr>
+            {% for r in records %}
             <tr>
                 <td>{{ r.id }}</td>
                 <td>{{ r.name }}</td>
@@ -44,8 +45,8 @@
                 <td>{{ r.status }}</td>
                 <td>{{ r.date }}</td>
             </tr>
-            { % endfor %}
+            {% endfor %}
         </table>
-        { % endif % }
+        {% endif %}
     </div>
 </body>
