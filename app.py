@@ -31,6 +31,13 @@ def records():
 #queries page
 @app.route('/queries')
 def queries():
+    dummy_records= [
+        {"id": 1, "name": "Case A", "officer": "Officer Mehmood", "date": "2023-01-01", "status": "Open"},
+        {"id": 2, "name": "Case B", "officer": "Officer Shazia", "date": "2023-01-05", "status": "Closed"},
+    ]
+    if request.method=='POST':
+        #logic for filtering will be added later
+        return render_template('queries.html', records=dummy_records)
     return render_template('queries.html')
 
 if __name__ == '__main__':
