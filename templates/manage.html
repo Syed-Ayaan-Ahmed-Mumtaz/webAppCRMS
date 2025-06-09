@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manage Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" class="logo" alt="Logo">
+        <h1 class="banner_text">Manage Records - CRMS</h1>
+    </div>
+
+    <!--Add Record Form-->
+    <div class="login-box">
+        <h2>Add New Record</h2>
+        <form method="POST" action="{{ url_for('manage records') }}">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <input type="text" name="status" placeholder="Status" required>
+            <input type="date" name="date" required>
+            <button type="submit">Add New Record</button>
+        </form>
+    </div>
+    <!--Display Records-->
+    <div class="records-container">
+        <h2>Existing Records</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.name }}</td>
+                <td>{{ record.desciption }}</td>
+                <td>{{ record.status }}</td>
+                <td>{{ record.date }}</td>
+                <td>
+                    <!--These buttons do nothing for now until further implementation-->
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
