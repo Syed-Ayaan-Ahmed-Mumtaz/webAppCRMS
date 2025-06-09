@@ -14,6 +14,18 @@
 
     <div class="records-container">
         <h2>Search / Filter Records</h2>
+        <!--Navigation Buttons-->
+        <div style="margin-bottom: 20px;">
+            <a href="{{ url_for('manage_records') }}">
+                <button>Go To Manage Records Page</button>
+            </a>
+            <a href="{{ url_for('records')}}">
+                <button>Go To Records Page</button>
+            </a>
+            <a href="{{ url_for('home') }}">
+                <button>Log Out</button>
+            </a>
+        </div>
         <form method="post" action="{{ url_for('queries') }}">
             <input type="text" name="name" placeholder="Search By Case Name"><br><br>
             <input type="text" name="officer" placeholder="Search By Officer Name"><br><br>

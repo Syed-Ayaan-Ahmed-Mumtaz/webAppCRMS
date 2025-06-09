@@ -15,7 +15,7 @@
     <!--Add Record Form-->
     <div class="login-box">
         <h2>Add New Record</h2>
-        <form method="POST" action="{{ url_for('manage records') }}">
+        <form method="POST" action="{{ url_for('manage_records') }}">
             <input type="text" name="name" placeholder="Name" required>
             <input type="text" name="description" placeholder="Description" required>
             <input type="text" name="status" placeholder="Status" required>
@@ -26,6 +26,18 @@
     <!--Display Records-->
     <div class="records-container">
         <h2>Existing Records</h2>
+        <!--Navigation Buttons-->
+        <div style="margin-bottom: 20px;">
+            <a href="{{ url_for('queries') }}">
+                <button>Go To Queries Page</button>
+            </a>
+            <a href="{{ url_for('records')}}">
+                <button>Go To Records Page</button>
+            </a>
+            <a href="{{ url_for('home') }}">
+                <button>Log Out</button>
+            </a>
+        </div>
         <table>
             <tr>
                 <th>ID</th>
@@ -39,7 +51,7 @@
             <tr>
                 <td>{{ record.id }}</td>
                 <td>{{ record.name }}</td>
-                <td>{{ record.desciption }}</td>
+                <td>{{ record.description }}</td>
                 <td>{{ record.status }}</td>
                 <td>{{ record.date }}</td>
                 <td>

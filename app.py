@@ -58,8 +58,9 @@ def manage_records():
         return redirect(url_for('manage_records'))
     
     dummy_records= [
-        {"id": 1, "name": "Case A", "officer": "Officer Mehmood", "date": "2023-01-01", "status": "Open"},
-        {"id": 2, "name": "Case B", "officer": "Officer Shazia", "date": "2023-01-05", "status": "Closed"},
+        {"id": 1, "name": "Case A", "description": "Robbery", "date": "2023-01-01", "status": "Open"},
+        {"id": 2, "name": "Case B", "description": "Theft", "date": "2023-01-05", "status": "Closed"},
     ]
+    return render_template('manage.html', records=dummy_records)
 if __name__ == '__main__':
     app.run(debug=True)
