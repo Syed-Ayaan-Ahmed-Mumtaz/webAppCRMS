@@ -15,9 +15,18 @@
     <!--Records -->
     <div class="records-container">
         <h2>Records</h2>
-        <a href="{{ url_for('queries') }}">
-            <button>Go To Queries</button>
-        </a>
+        <!--Navigation Buttons-->
+        <div style="margin-bottom: 20px;">
+            <a href="{{ url_for('queries') }}">
+                <button>Go To Queries Page</button>
+            </a>
+            <a href="{{ url_for('manage')}}">
+                <button>Go To Manage Records Page</button>
+            </a>
+            <a href="{{ url_for('login') }}">
+                <button>Log Out</button>
+            </a>
+        </div>
         <table>
             <tr>
                 <th>ID</th>

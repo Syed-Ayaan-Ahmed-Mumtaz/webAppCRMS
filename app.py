@@ -42,5 +42,24 @@ def queries():
     #show dummy data on GET  request as well
     return render_template('queries.html', records=dummy_records)
 
+#manageRecords page
+@app.route('/manage', methods=['GET', 'POST'])
+def manage_records():
+    if request.method=='POST':
+        name=request.form['name']
+        description=request.form['description']
+        status=request.form['status']
+        date=request.form['date']
+
+        #for now just for dummy data
+        print("Added: ", name, description, status, date)
+
+        #redirect or render again
+        return redirect(url_for('manage_records'))
+    
+    dummy_records= [
+        {"id": 1, "name": "Case A", "officer": "Officer Mehmood", "date": "2023-01-01", "status": "Open"},
+        {"id": 2, "name": "Case B", "officer": "Officer Shazia", "date": "2023-01-05", "status": "Closed"},
+    ]
 if __name__ == '__main__':
     app.run(debug=True)
