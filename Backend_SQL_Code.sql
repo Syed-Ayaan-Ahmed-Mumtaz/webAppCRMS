@@ -22,14 +22,14 @@ CREATE TABLE CriminalRecords (
 
 -- Add a user for login testing
 INSERT INTO Users (Username, Password) VALUES
-('admin', 'admin123');
+('admin123', 'admin123');
 
 -- Add sample criminal record
 INSERT INTO CriminalRecords (Name, Age, Gender, CrimeType, ArrestDate, OfficerName, Description) VALUES
 ('John Doe', 30, 'Male', 'Robbery', '2025-06-05', 'Officer Ali', 'Caught stealing from a bank.');
 
 SELECT * FROM Users 
-WHERE Username = 'admin' AND Password = 'admin123';
+WHERE Username = 'admin123' AND Password = 'admin123';
 
 SELECT 
   RecordID AS [ID], 
