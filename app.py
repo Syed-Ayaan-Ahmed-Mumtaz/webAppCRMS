@@ -179,50 +179,8 @@ def edit_record(record_id):
         return render_template('edit_record_form.html', record=request.form) # You'd need this template
 
     # For GET request, display the edit form with existing record data
-    # For simplicity, I'm providing a minimal HTML for edit.
-    # Ideally, this would be a separate template.
-    edit_form_html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Edit Record</title>
-        <link rel="stylesheet" href="{ url_for('static', filename='css/styles.css') }}/">
-    </head>
-    <body>
-        <div class="banner">
-            <img src="{ url_for('static', filename='images/logo.svg') }" alt="logo" class="logo">
-            <h1 class="banner-text">Edit Record - CRMS</h1>
-        </div>
-        <div class="records-container">
-            <h2>Edit Record (ID: {record.get('id', '')})</h2>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class="flash-messages">
-                        {% for category, message in messages %}
-                            <li class="flash-message {{ category }}">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-            <form method="POST" action="{ url_for('edit_record', record_id=record_id) }}/">
-                <input type="text" name="name" placeholder="Case Name" value="{record.get('name', '')}" required>
-                <textarea name="description" placeholder="Description" rows="3" required>{record.get('description', '')}</textarea>
-                <select name="status" required>
-                    <option value="Open" {'selected' if record.get('status') == 'Open' else ''}>Open</option>
-                    <option value="Closed" {'selected' if record.get('status') == 'Closed' else ''}>Closed</option>
-                    <option value="Under Investigation" {'selected' if record.get('status') == 'Under Investigation' else ''}>Under Investigation</option>
-                    <option value="Arrest Made" {'selected' if record.get('status') == 'Arrest Made' else ''}>Arrest Made</option>
-                </select>
-                <input type="text" name="officer_name" placeholder="Officer Name" value="{record.get('officer_name', '')}" required>
-                <input type="date" name="crime_date" value="{record.get('crime_date', '')}" required>
-                <button type="submit">Update Record</button>
-            </form>
-            <p><a href="{ url_for('manage_records') }}/"><button>Back to Manage Records</button></a></p>
-        </div>
-    </body>
-    </html>
-    """
-    return edit_form_html
+    
+    return render_template('edit_record.html', record=record)# For GET request, display the edit form with existing record data
 
 
 @app.route('/delete_record/<int:record_id>', methods=['POST'])
