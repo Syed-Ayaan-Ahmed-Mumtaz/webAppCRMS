@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<html>
 
 <head>
-    <title>CRMS - Records</title>
+    <title>CRMS - Queries</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
@@ -15,50 +16,69 @@
     <div class="records-container">
         <h2>Search / Filter Records</h2>
         <!--Navigation Buttons-->
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
             <a href="{{ url_for('manage_records') }}">
                 <button>Go To Manage Records Page</button>
             </a>
             <a href="{{ url_for('records')}}">
                 <button>Go To Records Page</button>
             </a>
-            <a href="{{ url_for('home') }}">
+            <a href="{{ url_for('logout') }}">
                 <button>Log Out</button>
             </a>
         </div>
         <form method="post" action="{{ url_for('queries') }}">
-            <input type="text" name="name" placeholder="Search By Case Name"><br><br>
-            <input type="text" name="officer" placeholder="Search By Officer Name"><br><br>
+            <input type="text" name="name" placeholder="Search By Case Name" value="{{ request.form.name or '' }}"><br>
+            <input type="text" name="officer_name" placeholder="Search By Officer Name"
+                value="{{ request.form.officer_name or '' }}"><br>
 
             <label>Status:</label>
             <select name="status">
                 <option value="">Any</option>
-                <option value="Closed">Closed</option>
-                <option value="Open">Open</option>
-            </select><br><br>
+                <option value="Open" {% if request.form.status=='Open' %}selected{% endif %}>Open</option>
+                <option value="Closed" {% if request.form.status=='Closed' %}selected{% endif %}>Closed</option>
+                <option value="Under Investigation" {% if request.form.status=='Under Investigation' %}selected{% endif
+                    %}>Under Investigation</option>
+                <option value="Arrest Made" {% if request.form.status=='Arrest Made' %}selected{% endif %}>Arrest Made
+                </option>
+            </select><br>
 
             <button type="submit">Run Query</button>
+            <a href="{{ url_for('queries') }}" style="text-decoration: none;"><button type="button">Clear
+                    Filters</button></a>
         </form>
 
         {% if records %}
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Case Name</th>
-                <th>Officer Name</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-            {% for r in records %}
-            <tr>
-                <td>{{ r.id }}</td>
-                <td>{{ r.name }}</td>
-                <td>{{ r.officer }}</td>
-                <td>{{ r.status }}</td>
-                <td>{{ r.date }}</td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Case Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Officer Name</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in records %}
+                <tr>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.description }}</td>
+                    <td>{{ r.status }}</td>
+                    <td>{{ r.officer_name }}</td>
+                    <td>{{ r.crime_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
+        {% else %}
+        {% if request.method == 'POST' %}
+        <p>No records found matching your query.</p>
+        {% endif %}
         {% endif %}
     </div>
 </body>
+
+</html>

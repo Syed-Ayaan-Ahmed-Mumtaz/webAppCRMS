@@ -3,7 +3,8 @@
 
 <head>
     <title>CRMS - Records</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" </head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+</head>
 
 <body>
     <!-- Banner Section -->
@@ -14,27 +15,30 @@
 
     <!--Records -->
     <div class="records-container">
-        <h2>Records</h2>
+        <h2>All Criminal Records</h2>
         <!--Navigation Buttons-->
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
             <a href="{{ url_for('queries') }}">
                 <button>Go To Queries Page</button>
             </a>
             <a href="{{ url_for('manage_records')}}">
                 <button>Go To Manage Records Page</button>
             </a>
-            <a href="{{ url_for('home') }}">
+            <a href="{{ url_for('logout') }}">
                 <button>Log Out</button>
             </a>
         </div>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Entity Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Case Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Officer Name</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
             <tbody>
                 {% for record in records %}
                 <tr>
@@ -42,7 +46,8 @@
                     <td>{{ record.name }}</td>
                     <td>{{ record.description }}</td>
                     <td>{{ record.status }}</td>
-                    <td>{{ record.date }}</td>
+                    <td>{{ record.officer_name }}</td>
+                    <td>{{ record.crime_date }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

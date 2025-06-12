@@ -9,58 +9,89 @@
 <body>
     <div class="banner">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" class="logo" alt="Logo">
-        <h1 class="banner_text">Manage Records - CRMS</h1>
+        <h1 class="banner-text">Manage Records - CRMS</h1>
     </div>
 
+    <!-- Flash messages display here -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
     <!--Add Record Form-->
-    <div class="login-box">
+    <div class="records-container"> <!-- Changed to records-container for consistent styling -->
         <h2>Add New Record</h2>
         <form method="POST" action="{{ url_for('manage_records') }}">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="text" name="description" placeholder="Description" required>
-            <input type="text" name="status" placeholder="Status" required>
-            <input type="date" name="date" required>
+            <input type="text" name="name" placeholder="Case Name" required>
+            <textarea name="description" placeholder="Description" rows="3" required></textarea>
+            <!-- Changed to textarea for description -->
+            <select name="status" required>
+                <option value="">Select Status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="Under Investigation">Under Investigation</option>
+                <option value="Arrest Made">Arrest Made</option>
+            </select>
+            <input type="text" name="officer_name" placeholder="Officer Name" required>
+            <input type="date" name="crime_date" required>
             <button type="submit">Add New Record</button>
         </form>
     </div>
+
     <!--Display Records-->
     <div class="records-container">
         <h2>Existing Records</h2>
         <!--Navigation Buttons-->
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
             <a href="{{ url_for('queries') }}">
                 <button>Go To Queries Page</button>
             </a>
             <a href="{{ url_for('records')}}">
                 <button>Go To Records Page</button>
             </a>
-            <a href="{{ url_for('home') }}">
+            <a href="{{ url_for('logout') }}">
                 <button>Log Out</button>
             </a>
         </div>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-            {% for record in records %}
-            <tr>
-                <td>{{ record.id }}</td>
-                <td>{{ record.name }}</td>
-                <td>{{ record.description }}</td>
-                <td>{{ record.status }}</td>
-                <td>{{ record.date }}</td>
-                <td>
-                    <!--These buttons do nothing for now until further implementation-->
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Case Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Officer</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.description }}</td>
+                    <td>{{ record.status }}</td>
+                    <td>{{ record.officer_name }}</td>
+                    <td>{{ record.crime_date }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_record', record_id=record.id) }}"><button>Edit</button></a>
+                        <form action="{{ url_for('delete_record', record_id=record.id) }}" method="post"
+                            style="display:inline-block;">
+                            <button type="submit"
+                                onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </body>
+
+</html>
