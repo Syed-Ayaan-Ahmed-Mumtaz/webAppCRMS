@@ -1,39 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Criminal Records</title>
+    <meta charset="UTF-8">
+    <title>All Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-    <h1>Criminal Records</h1>
 
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Case Name</th>
-            <th>Description</th>
-            <th>Criminal Name</th>
-            <th>Officer Name</th>
-            <th>Status</th>
-            <th>Crime Date</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.id }}</td>
-            <td>{{ record.CaseName }}</td>
-            <td>{{ record.Description }}</td>
-            <td>{{ record.CriminalName }}</td>
-            <td>{{ record.OfficerName }}</td>
-            <td>{{ record.Status }}</td>
-            <td>{{ record.Crime_Date }}</td>
-        </tr>
+    <div class="banner">
+        <h1 class="banner-text">Criminal Records Management System</h1>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
         {% endfor %}
-    </table>
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-    <p><a href="{{ url_for('manage_records') }}">Manage Records</a></p>
-    <p><a href="{{ url_for('queries') }}">Queries</a></p>
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    <div class="records-container">
+        <h2>All Records</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Name</th>
+                    <th>Criminal Name</th>
+                    <th>Officer Name</th>
+                    <th>Status</th>
+                    <th>Crime Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.CaseName }}</td>
+                    <td>{{ record.CriminalName }}</td>
+                    <td>{{ record.OfficerName }}</td>
+                    <td>{{ record.Status }}</td>
+                    <td>{{ record.Crime_Date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <a href="{{ url_for('manage_records') }}"><button>Manage Records</button></a>
+            <a href="{{ url_for('queries') }}"><button>Queries</button></a>
+        </div>
+    </div>
+
 </body>
 
 </html>

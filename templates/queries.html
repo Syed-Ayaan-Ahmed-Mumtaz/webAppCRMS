@@ -1,47 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Search Queries</title>
+    <meta charset="UTF-8">
+    <title>Query Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-    <h1>Search Criminal Cases</h1>
 
-    <form method="post">
-        <label>Case Name:</label><input type="text" name="case_name"><br>
-        <label>Officer Name:</label><input type="text" name="officer_name"><br>
-        <label>Status:</label><input type="text" name="status"><br>
-        <input type="submit" value="Search">
-    </form>
+    <div class="banner">
+        <h1 class="banner-text">Criminal Records Management System</h1>
+    </div>
 
-    {% if records %}
-    <h2>Search Results</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Case Name</th>
-            <th>Description</th>
-            <th>Criminal Name</th>
-            <th>Officer Name</th>
-            <th>Status</th>
-            <th>Crime Date</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.id }}</td>
-            <td>{{ record.CaseName }}</td>
-            <td>{{ record.Description }}</td>
-            <td>{{ record.CriminalName }}</td>
-            <td>{{ record.OfficerName }}</td>
-            <td>{{ record.Status }}</td>
-            <td>{{ record.Crime_Date }}</td>
-        </tr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
         {% endfor %}
-    </table>
+    </ul>
     {% endif %}
+    {% endwith %}
 
-    <p><a href="{{ url_for('records') }}">Go Back</a></p>
+    <div class="records-container">
+        <h2>Search Cases</h2>
+
+        <form method="POST">
+            <input type="text" name="case_name" placeholder="Case Name">
+            <input type="text" name="officer_name" placeholder="Officer Name">
+            <select name="status">
+                <option value="">All Status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="In Progress">In Progress</option>
+            </select>
+            <button type="submit">Search</button>
+            <a href="{{ url_for('queries') }}"><button type="button">Clear Filters</button></a>
+        </form>
+
+        {% if records %}
+        <h2>Results:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Name</th>
+                    <th>Criminal Name</th>
+                    <th>Officer Name</th>
+                    <th>Status</th>
+                    <th>Crime Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.CaseName }}</td>
+                    <td>{{ record.CriminalName }}</td>
+                    <td>{{ record.OfficerName }}</td>
+                    <td>{{ record.Status }}</td>
+                    <td>{{ record.Crime_Date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
 </body>
 
 </html>

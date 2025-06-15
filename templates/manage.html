@@ -1,67 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Manage Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-    <h1>Manage Criminal Cases</h1>
 
-    <h2>Add New Case</h2>
-    <form method="post">
-        <label>Case Name:</label><input type="text" name="case_name" required><br>
-        <label>Description:</label><input type="text" name="description" required><br>
-        <label>Victim Name:</label><input type="text" name="victim_name" required><br>
-        <label>Status:</label><input type="text" name="status" required><br>
-        <label>Crime Date:</label><input type="date" name="crime_date" required><br>
+    <div class="banner">
+        <h1 class="banner-text">Criminal Records Management System</h1>
+    </div>
 
-        <h3>Criminal Info</h3>
-        <label>Criminal Name:</label><input type="text" name="criminal_name" required><br>
-        <label>Criminal Age:</label><input type="number" name="criminal_age" required><br>
-        <label>Crime Type:</label><input type="text" name="crime_type" required><br>
-
-        <h3>Officer Info</h3>
-        <label>Officer Name:</label><input type="text" name="officer_name" required><br>
-        <label>Rank:</label><input type="text" name="officer_rank" required><br>
-        <label>Department:</label><input type="text" name="officer_department" required><br>
-
-        <input type="submit" value="Add Case">
-    </form>
-
-    <h2>Existing Cases</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Case Name</th>
-            <th>Description</th>
-            <th>Criminal Name</th>
-            <th>Officer Name</th>
-            <th>Status</th>
-            <th>Crime Date</th>
-            <th>Actions</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.id }}</td>
-            <td>{{ record.CaseName }}</td>
-            <td>{{ record.Description }}</td>
-            <td>{{ record.CriminalName }}</td>
-            <td>{{ record.OfficerName }}</td>
-            <td>{{ record.Status }}</td>
-            <td>{{ record.Crime_Date }}</td>
-            <td>
-                <a href="{{ url_for('edit_record', record_id=record.id) }}">Edit</a> |
-                <form method="post" action="{{ url_for('delete_record', record_id=record.id) }}"
-                    style="display:inline;">
-                    <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                </form>
-            </td>
-        </tr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
         {% endfor %}
-    </table>
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-    <p><a href="{{ url_for('records') }}">Go Back to Records</a></p>
+    <div class="records-container">
+        <h2>Add New Case</h2>
+        <form method="POST">
+            <input type="text" name="case_name" placeholder="Case Name" required>
+            <textarea name="description" placeholder="Description" required></textarea>
+            <input type="text" name="victim_name" placeholder="Victim Name" required>
+            <input type="text" name="criminal_name" placeholder="Criminal Name" required>
+            <input type="text" name="criminal_age" placeholder="Criminal Age" required>
+            <input type="text" name="crime_type" placeholder="Crime Type" required>
+            <select name="status" required>
+                <option value="">Select Status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="In Progress">In Progress</option>
+            </select>
+            <input type="date" name="crime_date" required>
+            <input type="text" name="officer_name" placeholder="Officer Name" required>
+            <input type="text" name="officer_rank" placeholder="Officer Rank" required>
+            <input type="text" name="officer_department" placeholder="Officer Department" required>
+            <button type="submit">Add Case</button>
+        </form>
+
+        <h2>Existing Cases</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Name</th>
+                    <th>Criminal Name</th>
+                    <th>Officer Name</th>
+                    <th>Status</th>
+                    <th>Crime Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.CaseName }}</td>
+                    <td>{{ record.CriminalName }}</td>
+                    <td>{{ record.OfficerName }}</td>
+                    <td>{{ record.Status }}</td>
+                    <td>{{ record.Crime_Date }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_record', record_id=record.id) }}"><button>Edit</button></a>
+                        <form action="{{ url_for('delete_record', record_id=record.id) }}" method="post"
+                            style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div><a href="{{ url_for('records') }}"><button>Go To Records</button></a></div>
+    </div>
+
 </body>
 
 </html>

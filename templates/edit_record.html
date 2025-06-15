@@ -1,25 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Edit Record</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-    <h1>Edit Case Record</h1>
 
-    <form method="post">
-        <label>Case Name:</label><input type="text" name="name" value="{{ record.name }}" required><br>
-        <label>Description:</label><input type="text" name="description" value="{{ record.description }}" required><br>
-        <label>Status:</label><input type="text" name="status" value="{{ record.status }}" required><br>
-        <label>Officer Name:</label><input type="text" name="officer_name" value="{{ record.officer_name }}"
-            required><br>
-        <label>Crime Date:</label><input type="date" name="crime_date" value="{{ record.crime_date }}" required><br>
+    <div class="banner">
+        <h1 class="banner-text">Criminal Records Management System</h1>
+    </div>
 
-        <input type="submit" value="Update Record">
-    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-    <p><a href="{{ url_for('manage_records') }}">Cancel</a></p>
+    <div class="records-container">
+        <h2>Edit Case Record</h2>
+
+        <form method="POST">
+            <input type="text" name="name" placeholder="Case Name" value="{{ record.name }}" required>
+            <textarea name="description" placeholder="Description" required>{{ record.description }}</textarea>
+            <input type="text" name="status" placeholder="Status" value="{{ record.status }}" required>
+            <input type="date" name="crime_date" value="{{ record.crime_date }}" required>
+            <input type="text" name="officer_name" placeholder="Officer Name" value="{{ record.officer_name }}"
+                required>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <div><a href="{{ url_for('manage_records') }}"><button>Back to Manage Records</button></a></div>
+    </div>
+
 </body>
 
 </html>
