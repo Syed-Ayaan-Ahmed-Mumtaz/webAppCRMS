@@ -1,60 +1,60 @@
--- Updated_Backend_Codes.sql
--- If you are running this script for the first time or recreating the DB:
-
 CREATE DATABASE RECORDS;
-USE RECORDS;
+GO
 
--- Create tables in proper order
--- Users table first (no foreign keys)
+USE RECORDS;
+GO
+
+-- Users table
 CREATE TABLE Users (
   UserID INT PRIMARY KEY IDENTITY,
   Username NVARCHAR(50) UNIQUE NOT NULL,
   Password NVARCHAR(50) NOT NULL
 );
+GO
 
--- Criminal table (no foreign keys)
+-- Criminal table
 CREATE TABLE Criminal(
   CriminalID INT PRIMARY KEY IDENTITY,
-  Name VARCHAR(100) NOT NULL, -- This is the Criminal's Name
+  Name VARCHAR(100) NOT NULL,
   Age INT,
   Crime_Type VARCHAR(50) NOT NULL
 );
+GO
 
--- Case table - MODIFIED to include Name, Description, Crime_Date
-CREATE TABLE Case(
+-- Case table (renamed safely using brackets since 'Case' is a reserved keyword)
+CREATE TABLE [Case](
   CaseID INT PRIMARY KEY IDENTITY,
   CriminalID INT,
-  Name VARCHAR(255),          -- New: A specific name for the Case (e.g., "Robbery at Bank X")
-  Description NVARCHAR(MAX),  -- New: Detailed description of the case
+  Name VARCHAR(255),
+  Description NVARCHAR(MAX),
   Victim_Name VARCHAR(100) NOT NULL,
   Status VARCHAR(20) NOT NULL,
-  Crime_Date DATE,            -- New: Date the crime occurred
+  Crime_Date DATE,
   FOREIGN KEY(CriminalID) REFERENCES Criminal(CriminalID)
 );
+GO
 
--- Officer table (depends on Case)
--- Note: The UNIQUE constraint on CaseID here implies 1 Officer per Case.
--- If multiple officers can be on a case, remove UNIQUE.
+-- Officer table
 CREATE TABLE Officer(
   OfficerID INT PRIMARY KEY IDENTITY,
   Name VARCHAR(100) NOT NULL,
   Rank VARCHAR(20) NOT NULL,
   Department VARCHAR(30) NOT NULL,
-  CaseID INT UNIQUE, -- UNIQUE constraint enforces 1:1 relationship
-  FOREIGN KEY(CaseID) REFERENCES Case(CaseID)
+  CaseID INT UNIQUE,
+  FOREIGN KEY(CaseID) REFERENCES [Case](CaseID)
 );
+GO
 
--- Report table (depends on Case)
--- Note: The UNIQUE constraint on CaseID here implies 1 Report per Case.
--- If multiple reports can be on a case, remove UNIQUE.
+-- Report table
 CREATE TABLE Report(
   ReportID INT PRIMARY KEY IDENTITY,
   CaseID INT UNIQUE,
   Report_Date DATE NOT NULL,
-  FOREIGN KEY(CaseID) REFERENCES Case(CaseID)
+  FOREIGN KEY(CaseID) REFERENCES [Case](CaseID)
 );
+GO
 
--- Suspect table (depends on Report and Case)
+-- Suspect table
 CREATE TABLE Suspect(
   SuspectID INT PRIMARY KEY IDENTITY,
   ReportID INT,
@@ -62,14 +62,11 @@ CREATE TABLE Suspect(
   Name VARCHAR(100) NOT NULL,
   Age INT NOT NULL,
   FOREIGN KEY(ReportID) REFERENCES Report(ReportID),
-  FOREIGN KEY(CaseID) REFERENCES Case(CaseID)
+  FOREIGN KEY(CaseID) REFERENCES [Case](CaseID)
 );
+GO
 
+-- Insert initial admin user
 INSERT INTO Users (Username, Password)
 VALUES ('admin', 'admin123');
-
--- IF YOUR DATABASE AND TABLES ALREADY EXIST, JUST RUN THESE ALTER COMMANDS:
--- USE RECORDS;
--- ALTER TABLE Case ADD Name VARCHAR(255);
--- ALTER TABLE Case ADD Description NVARCHAR(MAX);
--- ALTER TABLE Case ADD Crime_Date DATE;
+GO
