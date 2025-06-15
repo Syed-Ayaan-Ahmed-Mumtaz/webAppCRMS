@@ -1,3 +1,5 @@
+/* styles.css */
+
 .banner {
     background-color: navy;
     padding: 20px;
@@ -28,14 +30,18 @@
 
 table {
     width: 100%;
-    border: 1px gray;
+    border: 1px solid gray;
+    /* Changed to solid for clearer visibility */
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 20px;
+    /* Added margin for consistency */
 }
 
 th,
 td {
-    border: 1px gray;
+    border: 1px solid gray;
+    /* Changed to solid */
     padding: 8px;
     text-align: center;
 }
@@ -43,4 +49,186 @@ td {
 th {
     background: navy;
     color: white;
+}
+
+/* --- NEW CSS ADDITIONS BELOW --- */
+
+/* Login Box Styling */
+.login-box {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-top: 0;
+    color: navy;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: calc(100% - 20px);
+    /* Adjust for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Include padding in width */
+}
+
+.login-box button {
+    background-color: navy;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #000080;
+    /* Darker navy */
+}
+
+/* General Form Element Styling for Records Containers */
+.records-container form input[type="text"],
+.records-container form textarea,
+.records-container form select,
+.records-container form input[type="date"] {
+    width: calc(100% - 20px);
+    /* Adjust for padding and border */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+    font-size: 16px;
+    /* Consistent font size */
+}
+
+.records-container form button {
+    background-color: navy;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    /* Add some spacing */
+    transition: background-color 0.3s ease;
+}
+
+.records-container form button:hover {
+    background-color: #000080;
+}
+
+/* Flash Messages Styling */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    /* Light green */
+    color: #155724;
+    /* Dark green */
+    border: 1px solid #c3e6cb;
+}
+
+.flash-message.danger {
+    background-color: #f8d7da;
+    /* Light red */
+    color: #721c24;
+    /* Dark red */
+    border: 1px solid #f5c6cb;
+}
+
+.flash-message.info {
+    /* Optional: for general info messages */
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Styling for navigation buttons within records-container (e.g., Go To Queries Page) */
+.records-container>div button {
+    background-color: gray;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.records-container>div button:hover {
+    background-color: #555;
+}
+
+/* Clear Filters button styling */
+.records-container form a button[type="button"] {
+    background-color: #5bc0de;
+    /* Info blue */
+}
+
+.records-container form a button[type="button"]:hover {
+    background-color: #31b0d5;
+    /* Darker info blue */
+}
+
+/* Edit and Delete buttons within table */
+td a button,
+td form button {
+    background-color: #0275d8;
+    /* Blue for Edit */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 2px;
+    transition: background-color 0.3s ease;
+}
+
+td form button {
+    background-color: #d9534f;
+    /* Red for Delete */
+}
+
+td a button:hover {
+    background-color: #025aa5;
+}
+
+td form button:hover {
+    background-color: #c9302c;
+}
+
+/* Input and textarea width adjustment for better appearance */
+input,
+textarea,
+select {
+    max-width: 500px;
+    /* Limit max width for inputs in records-container */
 }

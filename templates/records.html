@@ -7,16 +7,13 @@
 </head>
 
 <body>
-    <!-- Banner Section -->
     <div class="banner">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo" class="logo">
         <h1 class="banner-text">Criminal Records Management System</h1>
     </div>
 
-    <!--Records -->
     <div class="records-container">
         <h2>All Criminal Records</h2>
-        <!--Navigation Buttons-->
         <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
             <a href="{{ url_for('queries') }}">
                 <button>Go To Queries Page</button>
@@ -34,6 +31,7 @@
                     <th>ID</th>
                     <th>Case Name</th>
                     <th>Description</th>
+                    <th>Criminal Name</th>
                     <th>Status</th>
                     <th>Officer Name</th>
                     <th>Date</th>
@@ -43,8 +41,9 @@
                 {% for record in records %}
                 <tr>
                     <td>{{ record.id }}</td>
-                    <td>{{ record.name }}</td>
+                    <td>{{ record.case_name }}</td>
                     <td>{{ record.description }}</td>
+                    <td>{{ record.criminal_name }}</td>
                     <td>{{ record.status }}</td>
                     <td>{{ record.officer_name }}</td>
                     <td>{{ record.crime_date }}</td>

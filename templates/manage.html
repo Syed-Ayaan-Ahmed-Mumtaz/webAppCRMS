@@ -12,7 +12,6 @@
         <h1 class="banner-text">Manage Records - CRMS</h1>
     </div>
 
-    <!-- Flash messages display here -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul class="flash-messages">
@@ -23,13 +22,18 @@
     {% endif %}
     {% endwith %}
 
-    <!--Add Record Form-->
-    <div class="records-container"> <!-- Changed to records-container for consistent styling -->
+    <div class="records-container">
         <h2>Add New Record</h2>
         <form method="POST" action="{{ url_for('manage_records') }}">
-            <input type="text" name="name" placeholder="Case Name" required>
+            <input type="text" name="case_name" placeholder="Case Name" required>
             <textarea name="description" placeholder="Description" rows="3" required></textarea>
-            <!-- Changed to textarea for description -->
+
+            <input type="text" name="criminal_name" placeholder="Criminal Name" required>
+            <input type="number" name="criminal_age" placeholder="Criminal Age" required>
+            <input type="text" name="crime_type" placeholder="Criminal Crime Type" required>
+            <input type="text" name="victim_name" placeholder="Victim Name" required>
+
+
             <select name="status" required>
                 <option value="">Select Status</option>
                 <option value="Open">Open</option>
@@ -38,15 +42,15 @@
                 <option value="Arrest Made">Arrest Made</option>
             </select>
             <input type="text" name="officer_name" placeholder="Officer Name" required>
+            <input type="text" name="officer_rank" placeholder="Officer Rank" required>
+            <input type="text" name="officer_department" placeholder="Officer Department" required>
             <input type="date" name="crime_date" required>
             <button type="submit">Add New Record</button>
         </form>
     </div>
 
-    <!--Display Records-->
     <div class="records-container">
         <h2>Existing Records</h2>
-        <!--Navigation Buttons-->
         <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
             <a href="{{ url_for('queries') }}">
                 <button>Go To Queries Page</button>
@@ -64,8 +68,9 @@
                     <th>ID</th>
                     <th>Case Name</th>
                     <th>Description</th>
+                    <th>Criminal Name</th>
                     <th>Status</th>
-                    <th>Officer</th>
+                    <th>Officer Name</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
@@ -74,8 +79,9 @@
                 {% for record in records %}
                 <tr>
                     <td>{{ record.id }}</td>
-                    <td>{{ record.name }}</td>
+                    <td>{{ record.case_name }}</td>
                     <td>{{ record.description }}</td>
+                    <td>{{ record.criminal_name }}</td>
                     <td>{{ record.status }}</td>
                     <td>{{ record.officer_name }}</td>
                     <td>{{ record.crime_date }}</td>
