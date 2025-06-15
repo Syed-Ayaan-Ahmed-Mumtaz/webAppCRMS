@@ -2,85 +2,46 @@
 <html>
 
 <head>
-    <title>CRMS - Queries</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Search Queries</title>
 </head>
 
 <body>
-    <div class="banner">
-        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo" class="logo">
-        <h1 class="banner-text">Criminal Records Management System</h1>
-    </div>
+    <h1>Search Criminal Cases</h1>
 
-    <div class="records-container">
-        <h2>Search / Filter Records</h2>
-        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
-            <a href="{{ url_for('manage_records') }}">
-                <button>Go To Manage Records Page</button>
-            </a>
-            <a href="{{ url_for('records')}}">
-                <button>Go To Records Page</button>
-            </a>
-            <a href="{{ url_for('logout') }}">
-                <button>Log Out</button>
-            </a>
-        </div>
+    <form method="post">
+        <label>Case Name:</label><input type="text" name="case_name"><br>
+        <label>Officer Name:</label><input type="text" name="officer_name"><br>
+        <label>Status:</label><input type="text" name="status"><br>
+        <input type="submit" value="Search">
+    </form>
 
-        <form method="post" action="{{ url_for('queries') }}">
-            <input type="text" name="case_name" placeholder="Search By Case Name"
-                value="{{ request.form.case_name or '' }}"><br>
-            <input type="text" name="officer_name" placeholder="Search By Officer Name"
-                value="{{ request.form.officer_name or '' }}"><br>
+    {% if records %}
+    <h2>Search Results</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Case Name</th>
+            <th>Description</th>
+            <th>Criminal Name</th>
+            <th>Officer Name</th>
+            <th>Status</th>
+            <th>Crime Date</th>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.id }}</td>
+            <td>{{ record.CaseName }}</td>
+            <td>{{ record.Description }}</td>
+            <td>{{ record.CriminalName }}</td>
+            <td>{{ record.OfficerName }}</td>
+            <td>{{ record.Status }}</td>
+            <td>{{ record.Crime_Date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 
-            <label>Status:</label>
-            <select name="status">
-                <option value="">Any</option>
-                <option value="Open" {% if request.form.status=='Open' %}selected{% endif %}>Open</option>
-                <option value="Closed" {% if request.form.status=='Closed' %}selected{% endif %}>Closed</option>
-                <option value="Under Investigation" {% if request.form.status=='Under Investigation' %}selected{% endif
-                    %}>Under Investigation</option>
-                <option value="Arrest Made" {% if request.form.status=='Arrest Made' %}selected{% endif %}>Arrest Made
-                </option>
-            </select><br>
-
-            <button type="submit">Run Query</button>
-            <a href="{{ url_for('queries') }}" style="text-decoration: none;"><button type="button">Clear
-                    Filters</button></a>
-        </form>
-
-        {% if records %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Case Name</th>
-                    <th>Description</th>
-                    <th>Criminal Name</th>
-                    <th>Status</th>
-                    <th>Officer Name</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in records %}
-                <tr>
-                    <td>{{ record.id or 'N/A' }}</td>
-                    <td>{{ record.case_name or 'N/A' }}</td>
-                    <td>{{ record.description or 'N/A' }}</td>
-                    <td>{{ record.criminal_name or 'N/A' }}</td>
-                    <td>{{ record.status or 'N/A' }}</td>
-                    <td>{{ record.officer_name or 'N/A' }}</td>
-                    <td>{{ record.crime_date or 'N/A' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        {% if request.method == 'POST' %}
-        <p>No records found matching your query.</p>
-        {% endif %}
-        {% endif %}
-    </div>
+    <p><a href="{{ url_for('records') }}">Go Back</a></p>
 </body>
 
 </html>

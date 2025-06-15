@@ -3,67 +3,23 @@
 
 <head>
     <title>Edit Record</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-    <div class="banner">
-        <img src="{{ url_for('static', filename='images/logo.svg') }}" class="logo" alt="Logo">
-        <h1 class="banner-text">Edit Record - CRMS</h1>
-    </div>
+    <h1>Edit Case Record</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class="flash-messages">
-        {% for category, message in messages %}
-        <li class="flash-message {{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+    <form method="post">
+        <label>Case Name:</label><input type="text" name="name" value="{{ record.name }}" required><br>
+        <label>Description:</label><input type="text" name="description" value="{{ record.description }}" required><br>
+        <label>Status:</label><input type="text" name="status" value="{{ record.status }}" required><br>
+        <label>Officer Name:</label><input type="text" name="officer_name" value="{{ record.officer_name }}"
+            required><br>
+        <label>Crime Date:</label><input type="date" name="crime_date" value="{{ record.crime_date }}" required><br>
 
-    <div class="records-container">
-        <h2>Update Criminal Record</h2>
+        <input type="submit" value="Update Record">
+    </form>
 
-        <form method="POST" action="{{ url_for('edit_record', record_id=record.id) }}">
-            <input type="text" name="case_name" placeholder="Case Name" value="{{ record.case_name or '' }}" required>
-            <textarea name="description" placeholder="Description" rows="3"
-                required>{{ record.description or '' }}</textarea>
-
-            <input type="text" name="criminal_name" placeholder="Criminal Name" value="{{ record.criminal_name or '' }}"
-                required>
-            <input type="number" name="criminal_age" placeholder="Criminal Age" value="{{ record.criminal_age or '' }}"
-                required>
-            <input type="text" name="crime_type" placeholder="Criminal Crime Type" value="{{ record.crime_type or '' }}"
-                required>
-            <input type="text" name="victim_name" placeholder="Victim Name" value="{{ record.victim_name or '' }}"
-                required>
-
-            <select name="status" required>
-                <option value="">Select Status</option>
-                <option value="Open" {% if record.status=='Open' %}selected{% endif %}>Open</option>
-                <option value="Closed" {% if record.status=='Closed' %}selected{% endif %}>Closed</option>
-                <option value="Under Investigation" {% if record.status=='Under Investigation' %}selected{% endif %}>
-                    Under Investigation</option>
-                <option value="Arrest Made" {% if record.status=='Arrest Made' %}selected{% endif %}>Arrest Made
-                </option>
-            </select>
-
-            <input type="text" name="officer_name" placeholder="Officer Name" value="{{ record.officer_name or '' }}"
-                required>
-            <input type="text" name="officer_rank" placeholder="Officer Rank" value="{{ record.officer_rank or '' }}"
-                required>
-            <input type="text" name="officer_department" placeholder="Officer Department"
-                value="{{ record.officer_department or '' }}" required>
-            <input type="date" name="crime_date" value="{{ record.crime_date or '' }}" required>
-
-            <button type="submit">Update Record</button>
-        </form>
-    </div>
-
-    <div class="records-container">
-        <a href="{{ url_for('manage_records') }}"><button>Back to Manage Records</button></a>
-    </div>
+    <p><a href="{{ url_for('manage_records') }}">Cancel</a></p>
 </body>
 
 </html>

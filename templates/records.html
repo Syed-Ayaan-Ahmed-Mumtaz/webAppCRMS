@@ -2,56 +2,38 @@
 <html>
 
 <head>
-    <title>CRMS - Records</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+    <title>Criminal Records</title>
 </head>
 
 <body>
-    <div class="banner">
-        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo" class="logo">
-        <h1 class="banner-text">Criminal Records Management System</h1>
-    </div>
+    <h1>Criminal Records</h1>
 
-    <div class="records-container">
-        <h2>All Criminal Records</h2>
-        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
-            <a href="{{ url_for('queries') }}">
-                <button>Go To Queries Page</button>
-            </a>
-            <a href="{{ url_for('manage_records')}}">
-                <button>Go To Manage Records Page</button>
-            </a>
-            <a href="{{ url_for('logout') }}">
-                <button>Log Out</button>
-            </a>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Case Name</th>
-                    <th>Description</th>
-                    <th>Criminal Name</th>
-                    <th>Status</th>
-                    <th>Officer Name</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in records %}
-                <tr>
-                    <td>{{ record.id or 'N/A' }}</td>
-                    <td>{{ record.case_name or 'N/A' }}</td>
-                    <td>{{ record.description or 'N/A' }}</td>
-                    <td>{{ record.criminal_name or 'N/A' }}</td>
-                    <td>{{ record.status or 'N/A' }}</td>
-                    <td>{{ record.officer_name or 'N/A' }}</td>
-                    <td>{{ record.crime_date or 'N/A' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Case Name</th>
+            <th>Description</th>
+            <th>Criminal Name</th>
+            <th>Officer Name</th>
+            <th>Status</th>
+            <th>Crime Date</th>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.id }}</td>
+            <td>{{ record.CaseName }}</td>
+            <td>{{ record.Description }}</td>
+            <td>{{ record.CriminalName }}</td>
+            <td>{{ record.OfficerName }}</td>
+            <td>{{ record.Status }}</td>
+            <td>{{ record.Crime_Date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{{ url_for('manage_records') }}">Manage Records</a></p>
+    <p><a href="{{ url_for('queries') }}">Queries</a></p>
+    <p><a href="{{ url_for('logout') }}">Logout</a></p>
 </body>
 
 </html>
