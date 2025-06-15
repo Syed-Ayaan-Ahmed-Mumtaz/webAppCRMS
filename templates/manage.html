@@ -33,7 +33,6 @@
             <input type="text" name="crime_type" placeholder="Criminal Crime Type" required>
             <input type="text" name="victim_name" placeholder="Victim Name" required>
 
-
             <select name="status" required>
                 <option value="">Select Status</option>
                 <option value="Open">Open</option>
@@ -45,6 +44,7 @@
             <input type="text" name="officer_rank" placeholder="Officer Rank" required>
             <input type="text" name="officer_department" placeholder="Officer Department" required>
             <input type="date" name="crime_date" required>
+
             <button type="submit">Add New Record</button>
         </form>
     </div>
@@ -62,6 +62,7 @@
                 <button>Log Out</button>
             </a>
         </div>
+
         <table>
             <thead>
                 <tr>
@@ -78,13 +79,13 @@
             <tbody>
                 {% for record in records %}
                 <tr>
-                    <td>{{ record.id }}</td>
-                    <td>{{ record.case_name }}</td>
-                    <td>{{ record.description }}</td>
-                    <td>{{ record.criminal_name }}</td>
-                    <td>{{ record.status }}</td>
-                    <td>{{ record.officer_name }}</td>
-                    <td>{{ record.crime_date }}</td>
+                    <td>{{ record.id or 'N/A' }}</td>
+                    <td>{{ record.case_name or 'N/A' }}</td>
+                    <td>{{ record.description or 'N/A' }}</td>
+                    <td>{{ record.criminal_name or 'N/A' }}</td>
+                    <td>{{ record.status or 'N/A' }}</td>
+                    <td>{{ record.officer_name or 'N/A' }}</td>
+                    <td>{{ record.crime_date or 'N/A' }}</td>
                     <td>
                         <a href="{{ url_for('edit_record', record_id=record.id) }}"><button>Edit</button></a>
                         <form action="{{ url_for('delete_record', record_id=record.id) }}" method="post"

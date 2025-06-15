@@ -40,13 +40,13 @@
             <tbody>
                 {% for record in records %}
                 <tr>
-                    <td>{{ record.id }}</td>
-                    <td>{{ record.case_name }}</td>
-                    <td>{{ record.description }}</td>
-                    <td>{{ record.criminal_name }}</td>
-                    <td>{{ record.status }}</td>
-                    <td>{{ record.officer_name }}</td>
-                    <td>{{ record.crime_date }}</td>
+                    <td>{{ record.id or 'N/A' }}</td>
+                    <td>{{ record.case_name or 'N/A' }}</td>
+                    <td>{{ record.description or 'N/A' }}</td>
+                    <td>{{ record.criminal_name or 'N/A' }}</td>
+                    <td>{{ record.status or 'N/A' }}</td>
+                    <td>{{ record.officer_name or 'N/A' }}</td>
+                    <td>{{ record.crime_date or 'N/A' }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

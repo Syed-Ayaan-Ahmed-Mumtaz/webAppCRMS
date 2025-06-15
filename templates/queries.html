@@ -25,6 +25,7 @@
                 <button>Log Out</button>
             </a>
         </div>
+
         <form method="post" action="{{ url_for('queries') }}">
             <input type="text" name="case_name" placeholder="Search By Case Name"
                 value="{{ request.form.case_name or '' }}"><br>
@@ -61,15 +62,15 @@
                 </tr>
             </thead>
             <tbody>
-                {% for r in records %}
+                {% for record in records %}
                 <tr>
-                    <td>{{ r.id }}</td>
-                    <td>{{ r.case_name }}</td>
-                    <td>{{ r.description }}</td>
-                    <td>{{ r.criminal_name }}</td>
-                    <td>{{ r.status }}</td>
-                    <td>{{ r.officer_name }}</td>
-                    <td>{{ r.crime_date }}</td>
+                    <td>{{ record.id or 'N/A' }}</td>
+                    <td>{{ record.case_name or 'N/A' }}</td>
+                    <td>{{ record.description or 'N/A' }}</td>
+                    <td>{{ record.criminal_name or 'N/A' }}</td>
+                    <td>{{ record.status or 'N/A' }}</td>
+                    <td>{{ record.officer_name or 'N/A' }}</td>
+                    <td>{{ record.crime_date or 'N/A' }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

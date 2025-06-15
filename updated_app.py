@@ -40,6 +40,7 @@ def fetch_all_cases():
     results = []
     for row in cursor.fetchall():
         record = dict(zip(columns, row))
+        record['id'] = record['CaseID']
         if record['Crime_Date']:
             record['Crime_Date'] = record['Crime_Date'].strftime('%Y-%m-%d')
         results.append(record)
@@ -73,13 +74,13 @@ def fetch_single_case_details(case_id):
             'id': row.CaseID,
             'name': row.CaseName,
             'description': row.Description,
+            'victim_name': row.Victim_Name,
             'status': row.Status,
-            'officer_name': row.OfficerName,
             'crime_date': row.Crime_Date.strftime('%Y-%m-%d') if row.Crime_Date else '',
             'criminal_name': row.CriminalName,
             'criminal_age': row.CriminalAge,
             'crime_type': row.CrimeType,
-            'victim_name': row.Victim_Name,
+            'officer_name': row.OfficerName,
             'officer_rank': row.OfficerRank,
             'officer_department': row.OfficerDepartment,
             'criminal_id': row.CriminalID,
@@ -190,6 +191,7 @@ def search_cases(case_name_query=None, officer_name_query=None, status_query=Non
     results = []
     for row in cursor.fetchall():
         record = dict(zip(columns, row))
+        record['id'] = record['CaseID']
         if record['Crime_Date']:
             record['Crime_Date'] = record['Crime_Date'].strftime('%Y-%m-%d')
         results.append(record)
@@ -318,7 +320,7 @@ def queries():
 
         records = search_cases(case_name, officer_name, status)
         if not records:
-             flash('No records found matching your query.', 'info')
+            flash('No records found matching your query.', 'info')
     return render_template('queries.html', records=records)
 
 if __name__ == '__main__':
