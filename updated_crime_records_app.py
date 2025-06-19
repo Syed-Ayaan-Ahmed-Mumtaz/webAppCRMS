@@ -12,8 +12,6 @@ conn = pyodbc.connect(
 )
 cursor = conn.cursor()
 
-# --- Backend Functions ---
-
 def login(username, password):
     cursor.execute("SELECT * FROM Users WHERE Username=? AND Password=?", (username, password))
     return cursor.fetchone() is not None
@@ -43,24 +41,20 @@ def insert_case_tk(case_name, description, criminal_name, criminal_age, crime_ty
     conn.autocommit = False  # Start transaction
 
     try:
-        # Parse date safely
         crime_date_obj = None
         if crime_date:
             crime_date_obj = datetime.strptime(crime_date, '%Y-%m-%d').date()
 
-        # Insert Criminal
         cursor.execute("INSERT INTO Criminal (Name, Age, Crime_Type) VALUES (?, ?, ?)",
                        (criminal_name, criminal_age, crime_type))
         criminal_id = cursor.execute("SELECT SCOPE_IDENTITY()").fetchval()
 
-        # Insert Case
         cursor.execute("""
             INSERT INTO Case (CriminalID, Name, Description, Victim_Name, Status, Crime_Date) 
             VALUES (?, ?, ?, ?, ?, ?)""",
             (criminal_id, case_name, description, victim_name, status, crime_date_obj))
         case_id = cursor.execute("SELECT SCOPE_IDENTITY()").fetchval()
 
-        # Insert Officer
         cursor.execute("""
             INSERT INTO Officer (Name, Rank, Department, CaseID) 
             VALUES (?, ?, ?, ?)""",
@@ -74,8 +68,6 @@ def insert_case_tk(case_name, description, criminal_name, criminal_age, crime_ty
         return False
     finally:
         conn.autocommit = True
-
-# --- GUI ---
 
 def show_login_page():
     login_win = tk.Tk()
@@ -195,5 +187,4 @@ def show_records_page_tk():
 
     records_win.mainloop()
 
-# --- Start ---
 show_login_page()
